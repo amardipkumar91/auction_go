@@ -1,0 +1,9 @@
+Bash Profile:-
+
+export PATH=${PATH}:/usr/local/mysql/bin/
+export GOPATH=/Users/amardip.kumar/Documents/GoLang
+export PATH=$GOPATH/bin:$PATH
+
+Bash RC :- 
+
+. ~/.bash_profile
