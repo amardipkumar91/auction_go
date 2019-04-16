@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"myFirstapp/offer"
+	"myFirstapp/socket"
 	u "myFirstapp/utility"
 	"net/http"
 	"strconv"
@@ -29,6 +30,7 @@ var CreateNewOffer = func(w http.ResponseWriter, r *http.Request) {
 	}
 	offer.CreateBy = usr.(uint)
 	resp := offer.Create()
+	go socket.Writer(&offer)
 	u.Respond(w, resp)
 }
 
@@ -47,6 +49,8 @@ var GetOffers = func(w http.ResponseWriter, r *http.Request) {
 	data, err := offer.Query(page, size, sortKey, 0)
 	resp := u.Message(true, "success")
 	resp["offers"] = data
+	defer r.Body.Close()
+	// go socket.Writer(&offer)
 	u.Respond(w, resp)
 
 }
