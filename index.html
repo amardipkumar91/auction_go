@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+   <head>
+     
+      <script type="text/javascript">
+         var exampleSocket = new WebSocket("ws://localhost:8000/ws")
+         // var update = function(){
+         //   exampleSocket.onmessage = function (event) {
+         //    var longlatArr = event.data.split(",");
+         //    debugger;
+         //    var i;
+         //    var text = "<table id = 'bid_offer' style='width:100%'> <tr><th>OfferId</th><th>OfferName</th><th>OfferPrice</th></tr>";
+         //    for (i = 0; i <= longlatArr/3 ; i++){
+         //       text += "<tr><td>" + longlatArr[0] + "</td></tr><tr><td>"+ longlatArr[1] + "</td></tr><tr><td>" + longlatArr[2] + "</td></tr></table>"
+         //    }
+         //    document.getElementById("demo").innerHTML = text;
+         //   }
+         // };
+         var update = function(){
+           exampleSocket.onmessage = function (e,ent) {
+            var longlatArr = event.data.split(" ");
+            debugger;
+            var div = document.createElement("DIV");
+            div.innerHTML = "OfferId : " + longlatArr[0].toString();
+            document.body.appendChild(div);
+            var div = document.createElement("DIV");
+            div.innerHTML = "Offer Name : " + longlatArr[1].toString();
+            document.body.appendChild(div);
+            var div = document.createElement("DIV");
+            div.innerHTML = "Offer Base Price : " + longlatArr[2].toString();
+            document.body.appendChild(div);
+            var div = document.createElement("DIV");
+            div.innerHTML = "<p>--------------------------------------------</p>"
+            document.body.appendChild(div);
+            
+           }
+         };
+         window.setTimeout(update);
+      </script>
+      </head>
+      <body>
+         <h1>Current Created Offers:</h1>
+         <div id="demo"></div>
+      </body>
+
+</html>

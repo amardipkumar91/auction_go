@@ -7,6 +7,7 @@ import (
 	"myFirstapp/handler"
 	"myFirstapp/middleware"
 	m "myFirstapp/middleware"
+	"myFirstapp/socket"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -25,11 +26,15 @@ func main() {
 	// })
 	// n := negroni.Classic()
 	// fmt.Println(n)
+	router.HandleFunc("/", socket.RootHandler).Methods("GET")
 	handler.CreateClientHandlers(router)
 	handler.OfferHandlers(router)
 	handler.BidHandlers(router)
+	router.HandleFunc("/ws", socket.WsHandler)
+	// router.HandleFunc("/longlat", socket.LongLatHandler).Methods("POST")
 
 	router.Use(middleware.JwtAuthentication)
+	go socket.Echo()
 
 	go func() {
 		log.Fatal(http.ListenAndServe(":9080", http.DefaultServeMux))
