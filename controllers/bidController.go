@@ -25,6 +25,10 @@ var CreateBid = func(w http.ResponseWriter, r *http.Request) {
 		u.Respond(w, u.Message(false, "OfferId not found"))
 		return
 	}
+	if res.Sold == true {
+		u.Respond(w, u.Message(false, "Offer already Sold"))
+		return
+	}
 	if user_bid <= res.BidPrice {
 		u.Respond(w, u.Message(false, "User Bid Price is low from current bid price"))
 		return
